@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@utility btn {
+  @apply rounded-xl
+}
+
+@utility input {
+  @apply rounded-xl
+}
