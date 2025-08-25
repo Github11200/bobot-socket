@@ -1,36 +1,31 @@
 <script lang="ts">
 	import '../app.css';
-	import field from '$lib/assets/field.png';
-	import Anotherthing from './anotherthing.svelte';
+	import { goto } from '$app/navigation';
+	import { webSocket } from '$lib/state.svelte';
 
-	let portNumber = $state(8000);
-	let deviceId = $state(512);
-	let socket: null | WebSocket = null;
+	let portNumber = $state(7071);
+	let deviceId = $state(23800);
 
 	const connectWebsocket = () => {
-		socket = new WebSocket(
+		webSocket.socket = new WebSocket(
 			`ws://localhost:${portNumber}/vexrobotics.vexcode/device?id=${deviceId}`
 		);
 
-		socket.addEventListener('open', (e) => {
+		webSocket.socket.addEventListener('open', (e) => {
 			console.log('Connected the socket!');
+			goto('/dashboard');
 		});
 	};
 </script>
 
-{#if socket === null}
-	<div class="flex flex-col gap-2">
-		<Anotherthing />
-		<label class="input w-full">
-			<span class="label">Port:</span>
-			<input type="number" placeholder="Port number..." class="input" bind:value={portNumber} />
-		</label>
-		<label class="input w-full">
-			<span class="label">Device ID:</span>
-			<input type="number" placeholder="Device id..." class="input" bind:value={deviceId} />
-		</label>
-		<button class="btn btn-neutral" onclick={connectWebsocket}>Connect</button>
-	</div>
-{:else}
-	<Anotherthing />
-{/if}
+<div class="flex flex-col gap-2 p-4">
+	<label class="input w-full">
+		<span class="label">Port:</span>
+		<input type="number" placeholder="Port number..." class="input" bind:value={portNumber} />
+	</label>
+	<label class="input w-full">
+		<span class="label">Device ID:</span>
+		<input type="number" placeholder="Device id..." class="input" bind:value={deviceId} />
+	</label>
+	<button class="btn btn-neutral" onclick={connectWebsocket}>Connect</button>
+</div>
