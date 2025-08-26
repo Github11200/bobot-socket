@@ -11,7 +11,7 @@
 			`ws://localhost:${portNumber}/vexrobotics.vexcode/device?id=${deviceId}`
 		);
 
-		webSocket.socket.addEventListener('open', (e) => {
+		webSocket.socket.addEventListener('open', () => {
 			console.log('Connected the socket!');
 			goto('/dashboard');
 		});

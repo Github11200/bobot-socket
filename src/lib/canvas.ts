@@ -20,6 +20,15 @@ class Canvas {
     this.context.fill()
   }
 
+  private centerCoordinates(params: ShapeParams) {
+    params.x += 1000 - (params.width / 2)
+    params.y += 1000 - (params.height / 2)
+  }
+
+  inchesToPixels(inches: number) {
+    return inches * (2000 / 144)
+  }
+
   drawImage(params: ImageParams) {
     const image = new Image();
     image.src = params.src;
@@ -29,18 +38,23 @@ class Canvas {
 
   drawRect(params: ShapeParams) {
     this.initShape(params)
+    this.centerCoordinates(params)
     this.context.rect(params.x, params.y, params.width, params.height);
     this.displayShape(params.strokeColor)
   }
 
   drawCircle(params: ShapeParams) {
     this.initShape(params)
-    this.context.arc(params.x, params.y, params.width, 0, 360)
+    this.centerCoordinates(params)
+    this.context.arc(params.x + params.width / 2, params.y + params.height / 2, params.width, 0, 360)
     this.displayShape(params.strokeColor)
   }
 
   drawLine(params: ShapeParams) {
     this.initShape(params)
+    this.centerCoordinates(params)
+    params.x += params.width / 2
+    params.y += params.height / 2
     this.context.moveTo(params.x, params.y)
     this.context.lineTo(params.x + params.width, params.y + params.height)
     this.displayShape(params.strokeColor)

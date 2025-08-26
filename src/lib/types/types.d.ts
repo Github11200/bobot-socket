@@ -4,4 +4,12 @@ interface InitOptions {
   isMotionDataSent: boolean;
 };
 
-export type { InitOptions }
+interface Pose {
+  x: number;
+  y: number;
+  orientation: number;
+};
+
+type MessageType = "position" | "motionStart" | "motionEnd" | "message"
+
+export type { InitOptions, Pose, MessageType }
