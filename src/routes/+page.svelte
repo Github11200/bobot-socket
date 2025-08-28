@@ -4,7 +4,7 @@
 	import { webSocket } from '$lib/state.svelte';
 
 	let portNumber = $state(7071);
-	let deviceId = $state(23800);
+	let deviceId = $state(24876);
 
 	const connectWebsocket = () => {
 		webSocket.socket = new WebSocket(
