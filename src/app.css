@@ -1,5 +1,8 @@
+/*! 🌼 daisyUI 5.0.50 */
 @import 'tailwindcss';
-@plugin 'daisyui';
+@plugin 'daisyui' {
+	logs: false;
+}
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 

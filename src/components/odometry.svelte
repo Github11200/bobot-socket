@@ -4,7 +4,7 @@
 	import Canvas from '$lib/canvas';
 	import { webSocket } from '$lib/state.svelte';
 	import type { MessageType, Pose } from '$lib/types/types';
-	import { degToRad } from '$lib/utils';
+	import { blobToMessagesParams, degToRad } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	// Dip if the web socket didn't cook
@@ -18,25 +18,23 @@
 	let context: CanvasRenderingContext2D | null = null;
 	let canvasManagement: Canvas | null = null;
 
-	let frame: number | null = null;
 	let paused: boolean = $state(false);
 
 	const readBlob = (messageBlob: string) => {
-		const newMessages = messageBlob.split('%');
-		for (let message of newMessages) {
-			const messageParams = message.split(',');
-			const messageType: MessageType = messageParams[0] as MessageType;
+		const messagesParams = blobToMessagesParams(messageBlob);
+		for (const messageParam of messagesParams) {
+			const messageType: MessageType = messageParam[0] as MessageType;
 
 			switch (messageType) {
 				case 'position':
 					currentPosition = {
-						x: Number(messageParams[1]),
-						y: Number(messageParams[2]),
-						orientation: Number(messageParams[3])
+						x: Number(messageParam[1]),
+						y: Number(messageParam[2]),
+						orientation: Number(messageParam[3])
 					};
 					break;
 				case 'message':
-					messages.push(messageParams[1]);
+					messages.push(messageParam[1]);
 					break;
 				default:
 					break;
@@ -82,7 +80,7 @@
 	};
 
 	const startAnimation = () => {
-		frame = requestAnimationFrame(loop);
+		requestAnimationFrame(loop);
 	};
 
 	onMount(() => {

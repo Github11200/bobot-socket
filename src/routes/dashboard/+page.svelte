@@ -8,7 +8,7 @@
 		component: Component;
 	}
 
-	let activeTab: string = $state('Odometry');
+	let activeTab: string = $state('PID');
 	let tabs: Tab[] = $state([
 		{
 			name: 'Odometry',
@@ -22,7 +22,7 @@
 </script>
 
 <div role="tablist" class="tabs justify-center tabs-box">
-	{#each tabs as tab}
+	{#each tabs as tab, index (index)}
 		{#if activeTab === tab.name}
 			<p class="tab-active tab">{tab.name}</p>
 		{:else}
@@ -39,7 +39,7 @@
 	{/each}
 </div>
 
-{#each tabs as tab}
+{#each tabs as tab, index (index)}
 	{#if tab.name === activeTab}
 		<tab.component />
 	{/if}
