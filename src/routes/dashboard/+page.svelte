@@ -8,7 +8,7 @@
 		component: Component;
 	}
 
-	let activeTab: string = $state('PID');
+	let activeTab: string = $state('Odometry');
 	let tabs: Tab[] = $state([
 		{
 			name: 'Odometry',
