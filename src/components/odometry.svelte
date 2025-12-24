@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import field from '$lib/assets/field.png';
 	import Canvas from '$lib/canvas';
 	import { webSocket } from '$lib/state.svelte';
@@ -8,7 +7,7 @@
 	import { onMount } from 'svelte';
 
 	// Dip if the web socket didn't cook
-	if (webSocket.socket === null) goto('/');
+	// if (webSocket.socket === null) goto('/');
 
 	let currentPosition: Pose = $state({ x: 0, y: 0, orientation: 0 });
 	let robotWidth = $state(13);
@@ -148,7 +147,7 @@
 		</div>
 		<div class="mx-auto prose flex gap-4 text-2xl">
 			<span>X: {currentPosition.x}</span>
-			<span>Y: {currentPosition.y}</span>
+			<span>Y: {-currentPosition.y}</span>
 			<span>Theta: {currentPosition.orientation}</span>
 		</div>
 		<div class="mx-auto flex h-[90%] w-[90%] justify-center gap-4">

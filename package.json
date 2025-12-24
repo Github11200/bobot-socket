@@ -44,6 +44,7 @@
 	},
 	"dependencies": {
 		"chart.js": "^4.5.0",
+		"chartjs-plugin-annotation": "^3.1.0",
 		"daisyui": "^5.0.50"
 	}
 }
