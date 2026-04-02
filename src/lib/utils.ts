@@ -8,4 +8,3 @@ export function blobToMessagesParams(blobString: string): string[][] {
 	for (const message of messages) messagesParams.push(message.split(','));
 	return messagesParams;
 }
-

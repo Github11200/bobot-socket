@@ -48,6 +48,7 @@
 						y: -Number(messageParam[2]),
 						orientation: Number(messageParam[3])
 					};
+
 					break;
 				case 'message':
 					messages.push(messageParam[1]);
@@ -150,6 +151,7 @@
 			<span>Y: {-currentPosition.y}</span>
 			<span>Theta: {currentPosition.orientation}</span>
 		</div>
+
 		<div class="mx-auto flex h-[90%] w-[90%] justify-center gap-4">
 			<canvas id="cool" bind:this={canvas} width={2000} height={2000} class="border-2"></canvas>
 			<div class="flex h-[100%] w-[40%] flex-col rounded-xl bg-base-300 p-4">

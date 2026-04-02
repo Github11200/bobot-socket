@@ -2,8 +2,8 @@
 	import { webSocket } from '$lib/state.svelte';
 	import { blobToMessagesParams } from '$lib/utils';
 	import Chart from 'chart.js/auto';
-	import { onMount } from 'svelte';
 	import annotationPlugin from 'chartjs-plugin-annotation';
+	import { onMount } from 'svelte';
 
 	let turnErrorChart: Chart | null = $state(null);
 	let driveErrorChart: Chart | null = $state(null);
@@ -16,6 +16,25 @@
 
 	let driveData: DataPoint[] = [];
 	let turnData: DataPoint[] = [];
+
+	let driveTarget: number = $state(0);
+	let turnTarget: number = $state(0);
+
+	$effect(() => {
+		if (turnErrorChart === null || driveErrorChart === null) return;
+
+		const turnAnnotation = turnErrorChart.options.plugins.annotation.annotations.line1;
+		turnAnnotation.yMin = turnTarget;
+		turnAnnotation.yMax = turnTarget;
+
+		turnErrorChart.update();
+
+		const driveAnnotation = driveErrorChart.options.plugins.annotation.annotations.line1;
+		driveAnnotation.yMin = driveTarget;
+		driveAnnotation.yMax = driveTarget;
+
+		driveErrorChart.update();
+	});
 
 	onMount(() => {
 		driveErrorChart = new Chart('driveError', {
@@ -36,8 +55,8 @@
 						annotations: {
 							line1: {
 								type: 'line',
-								yMin: 10,
-								yMax: 10,
+								yMin: driveTarget,
+								yMax: driveTarget,
 								borderColor: 'rgb(255, 99, 132)',
 								borderWidth: 2
 							}
@@ -86,8 +105,8 @@
 						annotations: {
 							line1: {
 								type: 'line',
-								yMin: 0,
-								yMax: 0,
+								yMin: turnTarget,
+								yMax: turnTarget,
 								borderColor: 'rgb(255, 99, 132)',
 								borderWidth: 2
 							}
@@ -171,23 +190,33 @@
 </script>
 
 <div class="mt-4 flex w-full flex-col items-center justify-center gap-8 px-20">
-	<button
-		class="btn"
-		onclick={() => {
-			turnData = [];
-			driveData = [];
-			if (turnErrorChart !== null) {
-				turnErrorChart.data.labels = [];
-				turnErrorChart.data.datasets[0].data = [];
-				turnErrorChart.update('none');
-			}
-			if (driveErrorChart !== null) {
-				driveErrorChart.data.labels = [];
-				driveErrorChart.data.datasets[0].data = [];
-				driveErrorChart.update('none');
-			}
-		}}>Clear</button
-	>
+	<div class="flex flex-row gap-2">
+		<button
+			class="btn"
+			onclick={() => {
+				turnData = [];
+				driveData = [];
+				if (turnErrorChart !== null) {
+					turnErrorChart.data.labels = [];
+					turnErrorChart.data.datasets[0].data = [];
+					turnErrorChart.update('none');
+				}
+				if (driveErrorChart !== null) {
+					driveErrorChart.data.labels = [];
+					driveErrorChart.data.datasets[0].data = [];
+					driveErrorChart.update('none');
+				}
+			}}>Clear</button
+		>
+		<label class="input w-full">
+			<span class="label">Turn Target:</span>
+			<input class="input" type="number" bind:value={turnTarget} />
+		</label>
+		<label class="input w-full">
+			<span class="label">Drive Target:</span>
+			<input class="input" type="number" bind:value={driveTarget} />
+		</label>
+	</div>
 	<canvas id="driveError"></canvas>
 	<canvas id="turnError"></canvas>
 </div>
