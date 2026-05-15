@@ -1,38 +1,17 @@
-# sv
+# Robot Data Visualization
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This repostiory is meant to be used with our [code](https://github.com/Github11200/Push-Back) for the 2025-2026 Vex Robotics season Push Back.
 
-## Creating a project
+It contains a website for visualizing odometry and PID data in real time as the robot is moving.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## How it Works
 
-```sh
-# create a new project in the current directory
-npx sv create
+The Logger class inside our Push Back repository sends messages in a CSV type format. These messages can contain the current position of the robot or the error term in a PID controller. All of these messages are sent through in real time using the built-in websocket in the VEX extension in VS Code.
 
-# create a new project in my-app
-npx sv create my-app
-```
+## Screenshots
 
-## Developing
+Odometry Visualization:
+<img width="3116" height="2270" alt="image" src="https://github.com/user-attachments/assets/d75a5237-fa80-4899-ab3b-25d39c9f2446" />
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+PID Graphs;
+<img width="3090" height="2270" alt="image" src="https://github.com/user-attachments/assets/17633d76-7f2b-41d5-8908-018e8dc71212" />
